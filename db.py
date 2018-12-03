@@ -123,7 +123,6 @@ class User(db.Model):
   def serialize(self):
     return {
         'id': self.id,
-        #'username': self.username,
         'email': self.email,
         'admin_groups': self.admin_groups,
         'member_groups': self.member_groups,
