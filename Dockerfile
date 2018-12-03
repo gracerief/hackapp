@@ -1,8 +1,8 @@
 FROM alpine
-RUN apk add python3
+RUN apk add build-base python3 python3-dev libffi-dev
 
 COPY . .
 RUN python3 -m pip install -r requirements.txt
 EXPOSE 5000
 
-CMD python3 src/routes.py
+CMD python3 routes.py

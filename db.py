@@ -9,7 +9,7 @@ class Group(db.Model):
   __tablename__ = 'group'
   id = db.Column(db.Integer, primary_key=True)
   title = db.Column(db.Integer, nullable=False)
-  admin = db.relationship('User', back_populates="admin_groups", nullable=False)
+  admin = db.relationship('User', back_populates="admin_groups")
   #website = db.Column(db.String, nullable=False)
   description = db.Column(db.String)
   members = db.relationship('User', back_populates="member_groups")
@@ -46,10 +46,10 @@ class Event(db.Model):
   host = db.relationship('User', back_populates="events")
   #TODO: LOCATION
   locname = db.Column(db.String)
-  address = db.Column(<GOOGLE MAPS ADDRESS>)
+  address = db.Column(db.String)
   #TODO: EVENT PHOTO
   #rel update -- group = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
-  photo = db.Column(db.Image)
+  #photo = db.Column(db.Image)
 
   def __init__(self, **kwargs):
     self.title = kwargs.get('title', '')
@@ -79,7 +79,7 @@ class Event(db.Model):
         'info': {
           'group': self.info['group'],
           'host': self.info['host']
-        }
+        },
         'location': {
           'name': self.location['name'],
           'address': self.location['address']

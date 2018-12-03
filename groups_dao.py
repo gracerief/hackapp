@@ -11,22 +11,3 @@ def verify_credentials(email, password):
         return False, None
 
     return optional_group.verify_password(password), optional_group
-
-def create_group(title, description, website, admin=None):
-    optional_group = get_group_by_title(title)
-
-    if optional_group is not None:
-        return False, optional_group
-
-    group = Group(
-        title=title,
-        admin=admin,
-        description=description,
-        website=website
-    )
-
-    db.session.add(group)
-    db.session.commit()
-
-    return True, group
-

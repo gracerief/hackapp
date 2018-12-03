@@ -1,7 +1,7 @@
 import json
 from db import db, Group, Event, User
 from flask import Flask, request
-import users_dao
+import users_dao, groups_dao, events_dao
 
 db_filename = "swarm.db"
 app = Flask(__name__)
@@ -153,7 +153,7 @@ def get_group(group_id):
   return json.dumps({'success': False, 'error': 'Group not found!'}), 404
 
 @app.route('/api/groups/', methods=['POST'])
-def create_group():
+def create_new_group():
   """Create new group specified by the user's input."""
   post_body = json.loads(request.data)
   if 'title' not in post_body or 'username' not in post_body:
@@ -366,6 +366,7 @@ def edit_user(user_id):
 @app.route('/api/user/<int:user_id>/', methods=['DELETE'])
 def delete_user(user_id):
     #TODO
+    pass
 
 @app.route('/api/user/<int:user_id>/group/<int:group_id>/', methods=['POST'])
 def join_group(group_id, user_id):

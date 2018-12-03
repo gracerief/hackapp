@@ -1,17 +1,17 @@
-from sqlalchemy_imageattach.context import store_context
-
-with store_context(store):
-    with open('image_to_attach.jpg') as f:
-        entity.picture.from_file(f)
+from db import *
+import datetime
 
 def event_active():
     current_time = datetime.datetime.now() + datetime.timedelta(days=1)
     
     event = Event.query.filter_by(id=event_id).first()
     if event is not None:
+        current_time = datetime.datetime.now()
+        event_time = event.time
+        if current_time>=event_time:
+            return True
+    return False
 
-    current_time = datetime.datetime.now() + datetime.timedelta(days=1)
-    event_time = event.time
 
 def create_event():
     #put in routes.py
@@ -42,13 +42,3 @@ def create_event():
     db.session.commit()
     return json.dumps({'success': True, 'data': event.serialize()}), 201
 
-
-def set_picture(request, event_id):
-    try:
-        event = Event.query.get(id=event_id)
-        with store_context(store):
-            event.photo.from_file(request.files['photos'])
-    except Exception:
-        db.session.rollback()
-        raise
-    db.session.commit()
